@@ -1,0 +1,42 @@
+# The following is the original question:
+
+In this problem, you are asked to create a set of real-time task schedules along with DVFS settings corresponding to each task. You need to write a script or program and it will process an input text file that includes a list of tasks to be executed (various SPEC benchmarks), their deadlines, and generates an output file listing a sequence of scheduling decisions based on four different scheduling policies: EDF, RM, Energy Efficient (EE) EDF and EE RM. Assume each task has a period that is equal to its deadline. For this part of the project we limit CPU to maximum four different frequencies/power settings. When core is not running an application, it consumes idle power at the lowest frequency. 
+
+The command line arguments of your program should be:
+$ your_program <input_file_name> <EDF or RM> [EE]
+In other words, the parameters are the file name, the scheduling strategy (either EDF or RM), and optionally EE (which stands for energy efficient). Two example calls could be:
+$ ./my_solution input.txt EDF EE
+$ ./my_solution input.txt RM
+
+Below is an example of the input file (we use tab here for readability, but the actual file will be space-delimitated). You may copy the following into a text file and use it for testing. Be sure to substitute the tabs with space characters. Note that all power values are in mW, and all execution times/deadlines are specified in seconds.
+
+5 1000 625 447 307 212 84
+bzip2 520 53 66 89 141
+mcf 220 40 50 67 114
+gobmk 500 104 134 184 313 
+hmmer 200 57 74 103 175
+sjeng 300 35 45 62 104
+
+WCET: Worst case execution time
+The first row represents: <# of tasks> <amount of time to execute in seconds> <active power @ 1188 MHz> <active power @ 918 MHz> <active power @ 648 MHz> <active power @ 384 MHz> <idle power @ lowest frequency> All other rows represent: <name of task> <deadline> <WCET @ 1188 MHz> <WCET @ 918 MHz> <WCET @ 648 MHz> <WCET @ 384 MHz>.
+
+As the deliverable of this question, your program should parse such an input file, and generate the scheduling sequence based on the following four algorithms:• EDF: Earliest deadline first when all tasks run at maximum frequency
+
+• RM: Rate-monotonic when all tasks run at maximum frequency
+• EE EDF/RM: Your scheduler needs to adjust the frequency of the CPU to be as low as  possible while still meeting the deadlines and ensuring tasks are still scheduled in order as defined by either EDF or RM policy. An intuitive way to think about this is that you change each tasks frequency to fill in ‘gaps’ in the schedule, while not violating the deadlines.
+
+When a task is scheduled, it should output the following: 
+<time started> <task name> <frequency task run at> <how long it ran for> <energy 
+consumed in Joules>. 
+If you are scheduling an idle period, use ‘IDLE’ as the task name and frequency value.
+An example of an output might look like: 
+1 bzip2 1188 53 33.125J
+54 IDLE IDLE 17 1.428J
+71 mcf 648 20 6.140J
+…etc…
+
+At the end of the output, you should also output the total energy consumption during the 
+execution, % of time spent idle vs. the time, and the total execution time. You will be required to 
+turn in your script/source code into TED, the results of your real-time schedules (EDF, RM, EE 
+EDF, EE RM) for the above sample input, along with discussion. You can write your script or 
+program in any language you like.
