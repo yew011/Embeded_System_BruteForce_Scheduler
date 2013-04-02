@@ -1,3 +1,10 @@
+# This project implements a very very very horrible EDF/RM scheduler
+The horribility comes as follows
+- each task can choose a different frequency at each period
+- there are several tasks and serveral frequencies
+- the final goal is to achieve minimum overall energy
+
+
 # The following is the original question:
 
 In this problem, you are asked to create a set of real-time task schedules along with DVFS settings corresponding to each task. You need to write a script or program and it will process an input text file that includes a list of tasks to be executed (various SPEC benchmarks), their deadlines, and generates an output file listing a sequence of scheduling decisions based on four different scheduling policies: EDF, RM, Energy Efficient (EE) EDF and EE RM. Assume each task has a period that is equal to its deadline. For this part of the project we limit CPU to maximum four different frequencies/power settings. When core is not running an application, it consumes idle power at the lowest frequency. 
@@ -20,8 +27,8 @@ sjeng 300 35 45 62 104
 WCET: Worst case execution time
 The first row represents: <# of tasks> <amount of time to execute in seconds> <active power @ 1188 MHz> <active power @ 918 MHz> <active power @ 648 MHz> <active power @ 384 MHz> <idle power @ lowest frequency> All other rows represent: <name of task> <deadline> <WCET @ 1188 MHz> <WCET @ 918 MHz> <WCET @ 648 MHz> <WCET @ 384 MHz>.
 
-As the deliverable of this question, your program should parse such an input file, and generate the scheduling sequence based on the following four algorithms:• EDF: Earliest deadline first when all tasks run at maximum frequency
-
+As the deliverable of this question, your program should parse such an input file, and generate the scheduling sequence based on the following four algorithms:
+• EDF: Earliest deadline first when all tasks run at maximum frequency
 • RM: Rate-monotonic when all tasks run at maximum frequency
 • EE EDF/RM: Your scheduler needs to adjust the frequency of the CPU to be as low as  possible while still meeting the deadlines and ensuring tasks are still scheduled in order as defined by either EDF or RM policy. An intuitive way to think about this is that you change each tasks frequency to fill in ‘gaps’ in the schedule, while not violating the deadlines.
 
